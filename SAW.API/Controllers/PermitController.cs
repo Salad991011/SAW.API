@@ -4,6 +4,7 @@ using SWA.Core.Service;
 using SWA.Core.Services;
 using System.Text.Json;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -29,7 +30,7 @@ public class PermitController : ControllerBase
         {
             username = _configuration["NIC:Username"],
             password = _configuration["NIC:Password"],
-            grant_type = "password"
+            grant_type = "password" //might need to be removed based on config set up
         };
 
         var json = JsonSerializer.Serialize(payload);
@@ -73,7 +74,7 @@ public class PermitController : ControllerBase
             });
         }
     }
-
+    [Authorize]
     [HttpPost("create-worker-permit")]
     public async Task<IActionResult> CreateWorkerPermit([FromBody] NICWorkerPermitRequestDto dto)
     {

@@ -8,11 +8,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using SWA.Core.Repository;
 using SWA.Core.Common.Helpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SAW.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class DashboardController : ControllerBase
     {
         private readonly IPermitRepository _permitRepository;
@@ -107,6 +109,10 @@ namespace SAW.API.Controllers
             };
 
             return new string(input.Select(ch => arabicToLatin.ContainsKey(ch) ? arabicToLatin[ch] : ch).ToArray());
+        }
+
+        private class AutorizeAttribute : Attribute
+        {
         }
     }
 
